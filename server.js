@@ -31,6 +31,20 @@ const pool = new Pool({
 
 
 
+app.get("/", (req, res) => {
+
+  res.send("FinNova Backend Activo")
+
+})
+
+
+
+
+
+
+
+
+
 function generarPerfil(score) {
 
   if (score >= 850) return "AAA"
@@ -69,27 +83,38 @@ function generarTasas(score) {
 
   return {
 
-    bac: (base + Math.random() * 1.5).toFixed(2),
+    bac:
+      (base + Math.random() * 1.5).toFixed(2),
 
-    bi: (base + Math.random() * 2).toFixed(2),
+    bi:
+      (base + Math.random() * 2).toFixed(2),
 
-    banrural: (base + Math.random() * 2.5).toFixed(2),
+    banrural:
+      (base + Math.random() * 2.5).toFixed(2),
 
-    promerica: (base + Math.random() * 1.8).toFixed(2),
+    promerica:
+      (base + Math.random() * 1.8).toFixed(2),
 
-    bam: (base + Math.random() * 2).toFixed(2),
+    bam:
+      (base + Math.random() * 2).toFixed(2),
 
-    bantrab: (base + Math.random() * 2.3).toFixed(2),
+    bantrab:
+      (base + Math.random() * 2.3).toFixed(2),
 
-    micoope: (base + Math.random() * 3).toFixed(2),
+    micoope:
+      (base + Math.random() * 3).toFixed(2),
 
-    antigua: (base + Math.random() * 2.7).toFixed(2),
+    antigua:
+      (base + Math.random() * 2.7).toFixed(2),
 
-    interbanco: (base + Math.random() * 2.4).toFixed(2),
+    interbanco:
+      (base + Math.random() * 2.4).toFixed(2),
 
-    gyt: (base + Math.random() * 1.9).toFixed(2),
+    gyt:
+      (base + Math.random() * 1.9).toFixed(2),
 
-    chn: (base + Math.random() * 2.1).toFixed(2)
+    chn:
+      (base + Math.random() * 2.1).toFixed(2)
 
   }
 
@@ -121,6 +146,8 @@ app.post("/registro", async (req, res) => {
 
 
 
+
+
     const existe =
       await pool.query(
 
@@ -132,6 +159,8 @@ app.post("/registro", async (req, res) => {
         [correo]
 
       )
+
+
 
 
 
@@ -156,8 +185,12 @@ app.post("/registro", async (req, res) => {
 
 
 
+
+
     const hash =
       await bcrypt.hash(password, 10)
+
+
 
 
 
@@ -197,6 +230,8 @@ app.post("/registro", async (req, res) => {
 
 
 
+
+
     res.json({
 
       mensaje:
@@ -209,6 +244,8 @@ app.post("/registro", async (req, res) => {
   catch (error) {
 
     console.log(error)
+
+
 
 
 
@@ -252,6 +289,8 @@ app.post("/login", async (req, res) => {
 
 
 
+
+
     const usuario =
       await pool.query(
 
@@ -263,6 +302,8 @@ app.post("/login", async (req, res) => {
         [correo]
 
       )
+
+
 
 
 
@@ -287,6 +328,8 @@ app.post("/login", async (req, res) => {
 
 
 
+
+
     const valido =
       await bcrypt.compare(
 
@@ -295,6 +338,8 @@ app.post("/login", async (req, res) => {
         usuario.rows[0].password
 
       )
+
+
 
 
 
@@ -319,6 +364,8 @@ app.post("/login", async (req, res) => {
 
 
 
+
+
     res.json(usuario.rows[0])
 
   }
@@ -326,6 +373,8 @@ app.post("/login", async (req, res) => {
   catch (error) {
 
     console.log(error)
+
+
 
 
 
@@ -374,6 +423,8 @@ app.post("/onboarding", async (req, res) => {
 
 
 
+
+
     let score = 500
 
 
@@ -382,17 +433,27 @@ app.post("/onboarding", async (req, res) => {
 
 
 
-    if (ingresos >= 15000) score += 200
 
-    if (ingresos >= 30000) score += 150
 
-    if (tipo_ingreso === "Asalariado") score += 100
+    if (ingresos >= 15000)
+      score += 200
 
-    if (tipo_ingreso === "Comerciante") score += 80
+    if (ingresos >= 30000)
+      score += 150
 
-    if (antiguedad >= 2) score += 100
+    if (tipo_ingreso === "Asalariado")
+      score += 100
 
-    if (antiguedad >= 5) score += 120
+    if (tipo_ingreso === "Comerciante")
+      score += 80
+
+    if (antiguedad >= 2)
+      score += 100
+
+    if (antiguedad >= 5)
+      score += 120
+
+
 
 
 
@@ -412,6 +473,8 @@ app.post("/onboarding", async (req, res) => {
 
 
 
+
+
     const perfil =
       generarPerfil(score)
 
@@ -421,8 +484,12 @@ app.post("/onboarding", async (req, res) => {
 
 
 
+
+
     const tasas =
       generarTasas(score)
+
+
 
 
 
@@ -496,6 +563,8 @@ app.post("/onboarding", async (req, res) => {
 
 
 
+
+
     const usuarioActualizado =
       await pool.query(
 
@@ -514,6 +583,8 @@ app.post("/onboarding", async (req, res) => {
 
 
 
+
+
     res.json(usuarioActualizado.rows[0])
 
   }
@@ -521,6 +592,8 @@ app.post("/onboarding", async (req, res) => {
   catch (error) {
 
     console.log(error)
+
+
 
 
 
@@ -568,6 +641,8 @@ app.post("/guardar-simulacion", async (req, res) => {
 
 
 
+
+
     await pool.query(
 
       `
@@ -606,6 +681,8 @@ app.post("/guardar-simulacion", async (req, res) => {
 
 
 
+
+
     res.json({
 
       mensaje:
@@ -618,6 +695,8 @@ app.post("/guardar-simulacion", async (req, res) => {
   catch (error) {
 
     console.log(error)
+
+
 
 
 
@@ -656,6 +735,8 @@ app.get("/historial/:id", async (req, res) => {
 
 
 
+
+
     const historial =
       await pool.query(
 
@@ -677,6 +758,8 @@ app.get("/historial/:id", async (req, res) => {
 
 
 
+
+
     res.json(historial.rows)
 
   }
@@ -684,6 +767,8 @@ app.get("/historial/:id", async (req, res) => {
   catch (error) {
 
     console.log(error)
+
+
 
 
 
@@ -710,11 +795,14 @@ app.get("/historial/:id", async (req, res) => {
 
 
 
-app.listen(3000, () => {
+const PORT =
+  process.env.PORT || 3000
+
+app.listen(PORT, () => {
 
   console.log(
 
-    "Servidor activo puerto 3000"
+    `Servidor activo puerto ${PORT}`
 
   )
 
