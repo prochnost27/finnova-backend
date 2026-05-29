@@ -14,15 +14,12 @@ app.use(express.json())
 
 const pool = new Pool({
 
-  user: "postgres",
+  connectionString:
+    process.env.DATABASE_URL,
 
-  host: "localhost",
-
-  database: "finnova_db",
-
-  password: "Prochnost27",
-
-  port: 5432
+  ssl: {
+    rejectUnauthorized: false
+  }
 
 })
 
